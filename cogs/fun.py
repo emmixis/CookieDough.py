@@ -70,19 +70,36 @@ Could you try it like this? <:QuestionBun:588539387688517642> \n\
         # 10 yes, 2 y'know/you decide, 3 chat decides, and 5 no. meaning that yes has 1/2 chance, and no has 1/4 chance.
         # We should rework this to allow for more dynamic responses. Such as one where cookie instills democracy
         #      and reacts with options for chat to vote on
-        CHOICES_8BALL = [
+        # The above is still todo, but the reworked function allows more granular control of the probability of yes, maybe, no.
+        # Probability is still hardcoded but I really don't feel like looking into that right now.
+        CHOICES_YES = [
             'Yepperoony!', 'Absoltutely!', 'For sure!!',
             'Yes - definitely!', 'Without a doubt!', 'uh-huh!',
-            'Duh, of course!', 'I think so, yeah!', 'Yes!', 'That\'s silly, so yes!',
+            'Duh, of course!', 'I think so, yeah!', 'Yes!', 'That\'s silly, so yes!'
+        ]
+        CHOICES_MAYBE = [
             '<:StarGiggle:445043444805795860> I think you already know the answer!',
             '<:QtWink:639512243796705290> You\'ve been good, so you can decide this time, little one',
             'I\'m not so sure... One of your friends here may be, though!',
             'Not sure, ask another one of your friends!',
-            f'first person to answer but you will decide!',
+            'first person to answer but you will decide!'
+        ]
+        CHOICES_NO = [
             'Hmm... Nope!', 'I don\'t think so, no', 'Absolutely not!',
             'Sounds Silly... nah!', 'Not a chance!'
         ]
-        result = random.choice(CHOICES_8BALL)
+        # Pick a random float between 0 and 1
+        decision = random.random()
+        # 50% chance of yes
+        if decision <= 0.5:
+            result = random.choice(CHOICES_YES)
+        # 40% chance of no
+        elif decision <= 0.9:
+            result = random.choice(CHOICES_NO)
+        # 10% chance of chat deciding
+        else:
+            result = random.choice(CHOICES_MAYBE)
+        # result = random.choice(CHOICES_8BALL)
         await ctx.send(f'<@{ctx.author.id}> {result} :fortune_cookie:')
 
 
